@@ -1,190 +1,120 @@
+# Driving Style Predictors
 
-# Module 3 Final Project
+# Problem Statement
 
+The aim of this project is to build a classification model that can accurately classify a drivers driving style as "Even Paced" or "Aggressive". Having an effective model is important since it will be tracking the driving behavior in real time to predict if the driver is agressive or not. With the use of this predictive model, a billing or savings strategy can be deployed to auto insurance companies in order to determaine car insurance rates for there drivers based on the driving styles.
 
-## Introduction
+### For this project I will be using the OSEMiN framework, wich stands for Obtain, Scrub, Explore, Model and Interpret. 
 
-In this lesson, we'll review all the guidelines and specifications for the final project for Module 3.
+* Obtain: The dataset consists of car data belonging to 24,000 instanceses and was downloaded from the Kaggle Datasets Library.
 
+* Scrub: I will search for null values and outliers to replace them with more suitable values or delete them form the data set. I will also loo at multicollinearity issues amongst the features and find creative ways to deal with them.
 
-## Objectives
+* Explore: Throughout the whole process, it is important to lookout for other important information that can be gathered from the data. I will carry out Exploratory Data Analysis and answer relevant questions about the current state of business.
 
-- Understand all required aspects of the Final Project for Module 3
-- Understand all required deliverables
-- Understand what constitutes a successful project
+* Model: I will use single and ensemble binary classification models. The aim of the project is to select the best performing model and fine-tune its hyperparameters to achieve correct identification of revenue generating sessions.
 
-## Final Project Summary
+* Interpret: Interpret the results of the models to make recommendations that generate value.
 
-Congratulations! You've made it through another _intense_ module, and now you're ready to show off your newfound Machine Learning skills!
+### Numerical Features
 
-![awesome](https://raw.githubusercontent.com/learn-co-curriculum/dsc-mod-3-project-v2-1/master/smart.gif)
+* altitude change, calculated over 10 seconds;
 
-All that remains for Module 3 is to complete the final project!
+* current speed value; average speed in the last 60 seconds;
 
-## The Project
+* speed variance in the last 60 seconds;
 
-The main goal of this project is to create a classification model. For this project you have the choice to either:
+* speed variation for every second of detection;
 
-- choose a data set from a curated list
-- choose your own data set _outside_ of the curated list. 
+* longitudinal acceleration, measured by the smartphone accelerometer and pre-processed with a low-pass filter;
 
-The data guidelines for either option are shown below
+* engine load, expressed as a percentage;
 
-For this project, you're going to select a dataset of your choosing and create a classification model. You'll start by identifying a problem you can solve with classification, and then identify a dataset. You'll then use everything you've learned about Data Science and Machine Learning thus far to source a dataset, preprocess and explore it, and then build and interpret a classification model that answers your chosen question.
+* engine coolant temperatures in celsius degree;
 
-### a. Choosing the data from a curated list
+* Manifold Air Pressure (MAP), a parameter the internal combustion engine uses to compute the optimal air/fuel ratio;
 
-You are allowed to select one of the four data sets described below. Each comes with its own advantages and disadvantages, and, of course, its own associated business problem and stakeholders. It may be desirable to flesh out your understanding of the audience or the business proposition a little more than sketched out here. If you select one of these four data sets, you **need no further approval from your instructor**.
+* Revolutions Per Minute (RPM) of the engine;
 
+* Mass Air Flow (MAF) Rate measured in g/s, used by the engine to set fuel delivery and spark timing;
 
-1) [Chicago Car Crash Data](https://data.cityofchicago.org/Transportation/Traffic-Crashes-Crashes/85ca-t3if). Note this links also to [Vehicle Data](https://data.cityofchicago.org/Transportation/Traffic-Crashes-Vehicles/68nd-jvt3) and to [Driver/Passenger Data](https://data.cityofchicago.org/Transportation/Traffic-Crashes-People/u6pd-qa9d).
+* Intake Air Temperature (IAT) at the engine entrance;
 
-Build a classifier to predict the primary contributory cause of a car accident, given information about the car, the people in the car, the road conditions etc. You might imagine your audience as a Vehicle Safety Board who's interested in reducing traffic accidents, or as the City of Chicago who's interested in becoming aware of any interesting patterns. Note that there is a **multi-class** classification problem. You will almost certainly want to bin or trim or otherwise limit the number of target categories on which you ultimately predict. Note e.g. that some primary contributory causes have very few samples.
+* vertical acceleration, measured by the smartphone accelerometer and pre-processed with a low-pass filter;
 
-2) [Terry Stops Data](https://catalog.data.gov/dataset/terry-stops).
-In [*Terry v. Ohio*](https://www.oyez.org/cases/1967/67), a landmark Supreme Court case in 1967-8, the court found that a police officer was not in violation of the "unreasonable search and seizure" clause of the Fourth Amendment, even though he stopped and frisked a couple of suspects only because their behavior was suspicious. Thus was born the notion of "reasonable suspicion", according to which an agent of the police may e.g. temporarily detain a person, even in the absence of clearer evidence that would be required for full-blown arrests etc. Terry Stops are stops made of suspicious drivers.
+* average fuel consumption, calculated as needed liters per 100 km.
 
-Build a classifier to predict whether an arrest was made after a Terry Stop, given information about the presence of weapons, the time of day of the call, etc. Note that this is a **binary** classification problem.
+# Results
 
-Note that this dataset also includes information about gender and race. You **may** use this data as well. You may, e.g. pitch your project as an inquiry into whether race (of officer or of subject) plays a role in whether or not an arrest is made.
+## K Nearest Neighbors
 
-If you **do** elect to make use of race or gender data, be aware that this can make your project a highly sensitive one; your discretion will be important, as well as your transparency about how you use the data and the ethical issues surrounding it.
+ <img src= "https://raw.githubusercontent.com/phillipojo24/dsc-mod-3-project-v2-1-onl01-dtsc-pt-041320/master/Screen%20Shot%202020-10-16%20at%202.30.09%20AM.png">
 
-3) [Customer Churn Data](https://www.kaggle.com/becksddf/churn-in-telecoms-dataset)
+Our Initial Model has an accuracy of 89% however this is not a good criterion to judge whether the model is predicting correctly for our business case because the data set is imbalanced. We have to rely on our recall value which is a metric that quantifies the number of correct positive predictions made out of all positive predictions that could have been made and Receiving Operator Characteristic Curve to give a better understanding of how our model is performing with this dataset. For this Base Model, the recall value is 0.26 which is not a good as we would want. However, for this Base model, the ROC Curve is 0.80, which is okay but not as good as we want. Let's try using a different model to see if that score can be improved. Since we are using K Nearest Neighbors, our 'n_neighbors' parameter can help improve our model performance but choosing the optional neighors. We will fill this "best value" by running a grid search. 
 
-Build a classifier to predict whether a customer will ("soon") stop doing business with SyriaTel, a telecommunications company. Note that this is a **binary** classification problem.
 
-Most naturally, your audience here would be the telecom business itself, interested in losing money on customers who don't stick around very long. Are there any predictable patterns here?
+After Runing Grid search for best parameter, Our revised model has a slight improved recall value of 0.34 which is a little better but not as good as we would want. The ROC Curve drop slightly to 0.77, which is still pretty good as well. While using the best model parameters we still werent able to imporve our model as much.
 
-4) [Tanzanian Water Well Data](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/23/) (*active competition*!)
-Tanzania, as a developing country, struggles with providing clean water to its population of over 57,000,000. There are many waterpoints already established in the country, but some are in need of repair while others have failed altogether.
+## Random Forest Classifier
 
-Build a classifier to predict the condition of a water well, using information about the sort of pump, when it was installed, etc. Note that this is a **ternary** classification problem.
+<img src = 'https://raw.githubusercontent.com/phillipojo24/dsc-mod-3-project-v2-1-onl01-dtsc-pt-041320/master/Screen%20Shot%202020-10-16%20at%202.30.43%20AM.png'>
 
+The Base Random Forest over-fitted the data, causing the training accuracy to be 100%, but the test accuracy wasn't too bad at 93.28%. the recall value improved to 0.52 which not as good as we would want. The ROC Curve improved to 0.98 which the higher the value, the better, with a 1.0 giving perfect predictions, which is still pretty good as well. Looks like this imbalnced data set is going to be a problem with these models so I will use SMOTENC to balance the data set. 
 
-### b. Selecting a Data Set _Outside_ of the Curated List
+SMOTENC is an oversampling method that helps with imbalanced data sets. The continuous features of the new synthetic minority class sample are created using the same approach of SMOTE as described earlier. The nominal feature is given the value occuring in the majority of the k-nearest neighbors. 
 
-We encourage you to be very thoughtful when identifying your problem and selecting your data set--an overscoped project goal or a poor data set can quickly bring an otherwise promising project to a grinding halt. **If you are going to choose your own data set, you'll need to run it by your instructor for approval**.
+Model is no longer overfitted but we have experrienced a drop in ROC curve 0.81 and recall values of 0.74 . Random Forest Classifer was an improvement but we will try one more model to see if we can get better accuracy.
 
-To help you select an appropriate data set for this project, we've set some guidelines:
+## XGBoost Classifier
 
-1. Your dataset should work for classification. The classification task can be either binary or multiclass, as long as it's a classification model.   
+<img src= 'https://raw.githubusercontent.com/phillipojo24/dsc-mod-3-project-v2-1-onl01-dtsc-pt-041320/master/Screen%20Shot%202020-10-16%20at%202.31.01%20AM.png'>
 
-2. Your dataset needs to be of sufficient complexity. Try to avoid picking an overly simple dataset. Try to avoid extremely small datasets, as well as the most common datasets like titanic, iris, MNIST, etc. We want to see all the steps of the Data Science Process in this project--it's okay if the dataset is mostly clean, but we expect to see some preprocessing and exploration. See the following section, **_Data Set Constraints_**, for more information on this.   
+Grid Search was able to find the optimal parameter for the XGBoost model. The training and test accuracy improved slightly, but the ROC Curve remained pretty much the same.
 
-3. On the other end of the spectrum, don't pick a problem that's too complex, either. Stick to problems that you have a clear idea of how you can use machine learning to solve it. For now, we recommend you stay away from overly complex problems in the domains of Natural Language Processing or Computer Vision--although those domains make use of Supervised Learning, they come with a lot of other special requirements and techniques that you don't know yet (but you'll learn soon!). If you're chosen problem feels like you've overscoped, then it probably is. If you aren't sure if your problem scope is appropriate, double check with your instructor!  
+## Feature Importance
 
-#### Data Set Constraints
+<img src='https://raw.githubusercontent.com/phillipojo24/dsc-mod-3-project-v2-1-onl01-dtsc-pt-041320/master/Screen%20Shot%202020-10-17%20at%201.40.32%20PM.png'> 
 
-When selecting a data set, be sure to take into consideration the following constraints:
+This plot illustrates the top 20 important features in our model in decending order. The "VehicleSpeedInstantaneous" which stands for Current Speed Value is the feature that was used the most by the XGBoost tree. This graph does not show how each feature values positivily or negativily affect the model. 
 
-1. Your data set can't be one we've already worked with in any labs.
-2. Your data set should contain a minimum of 1000 rows.    
-3. Your data set should contain a minimum of 10 predictor columns, before any one-hot encoding is performed.   
-4. Your instructor must provide final approval on your data set.
 
-#### Problem First, or Data First?
 
-There are two ways that you can about getting started: **_Problem-First_** or **_Data-First_**.
+Using the shap.summary_plot will show the true relationship of each of the predictors with the target variable. Feature importance variable are ranked in descending order with the original values color coded whether that variable is high (in red) or low (in blue) for visual observations.
 
-**_Problem-First_**: Start with a problem that you want to solve with classification, and then try to find the data you need to solve it.  If you can't find any data to solve your problem, then you should pick another problem.
+## SHAP Feature Importance
 
-**_Data-First_**: Take a look at some of the most popular internet repositories of cool data sets we've listed below. If you find a data set that's particularly interesting for you, then it's totally okay to build your problem around that data set.
+<img src='https://raw.githubusercontent.com/phillipojo24/dsc-mod-3-project-v2-1-onl01-dtsc-pt-041320/master/Screen%20Shot%202020-10-17%20at%201.40.59%20PM.png'>
 
-There are plenty of amazing places that you can get your data from. We recommend you start looking at data sets in some of these resources first:
+Things that help predict Aggressive Driving
 
-* [UCI Machine Learning Datasets Repository](https://archive.ics.uci.edu/ml/datasets.html)
-* [Kaggle Datasets](https://www.kaggle.com/datasets)
-* [Awesome Datasets Repo on Github](https://github.com/awesomedata/awesome-public-datasets)
-* [New York City Open Data Portal](https://opendata.cityofnewyork.us/)
-* [Inside AirBNB ](http://insideairbnb.com/)
+    * Road Condition (categorical)
+    * Engine Load - Force produce by the engine
+    * Average Fuel Consumption - Fuel consumed over a certain amount of distance
+    * Vertical and Longitudinal Acceleration 
+    * Vehicle Speed Variation/ Variance - Speed fluctuation over a period of time
+    * Engine RPM - Reveloutions per min
 
+## SHAP Dependence Plots
 
-## The Deliverables
+<img src='https://raw.githubusercontent.com/phillipojo24/dsc-mod-3-project-v2-1-onl01-dtsc-pt-041320/master/Screen%20Shot%202020-10-17%20at%201.41.12%20PM.png'>
 
-For online students, your completed project should contain the following four deliverables:
+When the Average Fuel Consumption is low the predicted probability is higher while when the fuel consumption is high the predicted probability is lower.
 
-1. A **_Jupyter Notebook_** containing any code you've written for this project. This work will need to be pushed to a public GitHub repository dedicated for this project.
+<img src='https://raw.githubusercontent.com/phillipojo24/dsc-mod-3-project-v2-1-onl01-dtsc-pt-041320/master/Screen%20Shot%202020-10-17%20at%201.41.31%20PM.png'>
 
-2. An organized **README.md** file in the GitHub repository that describes the contents of the repository. This file should be the source of information for navigating through the repository. 
+Speeds over 60 Mph negatively impacts the model because it becomes hard to tell if the driver is aggressive or not. That would be the thresshold for the model predictions strength but after 60 mph this feature becomes irrelevant.
 
-3. A **_[Blog Post](https://github.com/learn-co-curriculum/dsc-welcome-blogging-v2-1)_**.
+# Recomendations
 
-4. An **_"Executive Summary" PowerPoint Presentation_** that gives a brief overview of your problem/dataset, and each step of the OSEMN process.
+To Summarize, the purpose of building this model was to be able to predict wheter a driver was driving agressive or not. Its intent was to give insurance companies another risk factor to implement in giving out accurate insurance premeiums. Today, most companies just use driving history whether it be lenght of driving history or any previous traffic violation. This gives companies a real time predictor and give the drivers a better scenario to always be able to be a better driver.
 
-Note: On-campus students may have different deliverables, please speak with your instructor.
+*  The improve the models predicting capability i would like to add Age and Gender predictors and she if the will help the models performance. For Example, do younger men tend to drive more aggressively?
 
-### Jupyter Notebook Must-Haves
+* More car attributies should be recorded like Averge Steering Wheel Jerk and Aggressive braking could also be added as a predictor and help make the model better.
 
-For this project, your Jupyter Notebook should meet the following specifications:
+* Gather new data from all type of cars. These mini smart cars dont have much aggressive ability. It would be intresting to see diffrent sedans, coupes and trucks involved in the next round of data.
 
-**_Organization/Code Cleanliness_**
 
-* The notebook should be well organized, easy to follow, and code is commented where appropriate.  
-    * Level Up: The notebook contains well-formatted, professional looking markdown cells explaining any substantial code. All functions have docstrings that act as professional-quality documentation.  
-* The notebook is written to technical audiences with a way to both understand your approach and reproduce your results. The target audience for this deliverable is other data scientists looking to validate your findings.  
+```python
 
-**_Process, Methodology, and Findings_**
-
-* Your notebook should contain a clear record of your process and methodology for exploring and preprocessing your data, building and tuning a model, and interpreting your results.
-* We recommend you use the OSEMN process to help organize your thoughts and stay on track.
-
-### Blog Post Must-Haves
-
-Refer back to the [Blogging Guidelines](https://github.com/learn-co-curriculum/dsc-welcome-blogging-v2-1) for the technical requirements and blog ideas.
-
-## The Process
-
-These steps are informed by Smart Vision's<sup>1</sup> description of the CRISP-DM process.
-
-### 1. Business Understanding
-
-Start by reading this document, and making sure that you understand the kinds of questions being asked.  In order to narrow your focus, you will likely want to make some design choices about your specific audience, rather than addressing all of the "many people" mentioned in the background section.  Do you want to emphasize affordability, investment, or something else?  This framing will help you choose which stakeholder claims to address.
-
-Three things to be sure you establish during this phase are:
-
-1. **Objectives:** what questions are you trying to answer, and for whom?
-2. **Project plan:** you may want to establish more formal project management practices, such as daily stand-ups or using a Trello board, to plan the time you have remaining.  Regardless you should determine the division of labor, communication expectations, and timeline.
-3. **Success criteria:** what does a successful project look like?  How will you know when you have achieved it?
-
-### 2. Data Understanding
-
-Write a script to download the data (or instructions for future users on how to manually download it), and explore it.  Do you understand what the columns mean?  How do the three data tables relate to each other?  How will you select the subset of relevant data?  What kind of data cleaning is required?
-
-It may be useful to generate visualizations of the data during this phase.
-
-### 3. Data Preparation
-
-Through SQL and Pandas, perform any necessary data cleaning and develop a query that pulls in all relevant data for analysis in a linear regression model, including any merging of tables.  Be sure to document any data that you choose to drop or otherwise exclude.  This is also the phase to consider any feature scaling or one-hot encoding required to feed the data into a classification model.
-
-### 4. Modeling
-
-The focus this time is on prediction. Good prediction is a matter of the model generalizing well. Steps we can take to assure good generalization include: testing the model on unseen data, cross-validation, and regularization. What sort of model should you build? A diverse portfolio is probably best. Classification models we've looked at so far include logistic regression, decision trees, bagging, and boosting, each of these with different flavors. You are encouraged to try any or all of these.
-
-### 5. Evaluation
-
-Recall that there are many different metrics we might use for evaluating a classification model. Accuracy is intuitive, but can be misleading, especially if you have class imbalances in your target. Perhaps, depending on you're defining things, it is more important to minimize false positives, or false negatives. It might therefore be more appropriate to focus on precision or recall. You might also calculate the AUC-ROC to measure your model's *discrimination*.
-
-### 6. Deployment
-
-In this case, your "deployment" comes in the form of the deliverables listed above. Make sure you can answer the following questions about your process:
-
- - "How did you pick the question(s) that you did?"
- - "Why are these questions important from a business perspective?"
- - "How did you decide on the data cleaning options you performed?"
- - "Why did you choose a given method or library?"
- - "Why did you select those visualizations and what did you learn from each of them?"
- - "Why did you pick those features as predictors?"
- - "How would you interpret the results?"
- - "How confident are you in the predictive quality of the results?"
- - "What are some of the things that could cause the results to be wrong?"
-
-
-## Grading Rubric 
-
-Online students can find a PDF of the grading rubric for the project [here](https://github.com/learn-co-curriculum/dsc-mod-3-project-v2-1/blob/master/module_3_project_rubric.pdf). _Note: On-campus students may have different requirements, please speak with your instructor._ 
-
-
-## Citation
-
-1. "What is the CRISP-DM Methodology?" Smart Vision Europe. Available at: https://www.sv-europe.com/crisp-dm-methodology/
+```
