@@ -108,6 +108,15 @@ Speeds over 60 Mph negatively impacts the model because it becomes hard to tell 
 
 To Summarize, the purpose of building this model was to be able to predict wheter a driver was driving agressive or not. Its intent was to give insurance companies another risk factor to implement in giving out accurate insurance premeiums. Today, most companies just use driving history whether it be lenght of driving history or any previous traffic violation. This gives companies a real time predictor and give the drivers a better scenario to always be able to be a better driver.
 
+> * Engine Load - Pay attention to higher percentages of engine load that will be predicted as aggressive driving and driver premiums should be higher.  
+
+> * Average Fuel Consumption - Distance traveled and amount of fuel consumed. The higher fuel consumption will not be predicted as aggressive driving so driver premiums should be lower.
+
+
+> * Engine RPM- Higher RPMs will be predicted as aggressive driving so driver premiums should be higher.
+
+# Future Work
+
 *  The improve the models predicting capability i would like to add Age and Gender predictors and she if the will help the models performance. For Example, do younger men tend to drive more aggressively?
 
 * More car attributies should be recorded like Averge Steering Wheel Jerk and Aggressive braking could also be added as a predictor and help make the model better.
